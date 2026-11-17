@@ -49,8 +49,14 @@ fi
   || /usr/libexec/PlistBuddy -c "Set :CFBundleIconName AppIcon" "$APP/Contents/Info.plist"
 
 echo "→ Signing…"
-# Uses a Developer ID if SIGN_IDENTITY is set, otherwise ad-hoc.
-codesign --force --deep --options runtime --timestamp=none --sign "${SIGN_IDENTITY:--}" "$APP"
+# With SIGN_IDENTITY (e.g. "Developer ID Application: …") the app is signed for notarization:
+# hardened runtime + secure timestamp. Without it, ad-hoc signing for local use.
+if [ -n "${SIGN_IDENTITY:-}" ]; then
+  codesign --force --options runtime --timestamp --sign "$SIGN_IDENTITY" "$APP"
+  codesign --verify --strict --verbose=2 "$APP"
+else
+  codesign --force --deep --options runtime --timestamp=none --sign - "$APP"
+fi
 
 if [ "${1:-}" = "install" ]; then
   pkill -x Headshare 2>/dev/null || true
