@@ -76,11 +76,7 @@ To update translations: edit `Localization/translations/<lang>.json`, then run `
 
 ## Releasing
 
-Push a version tag. GitHub Actions builds a universal app, packages the DMG and publishes the release:
-
-```bash
-git tag v1.0.0 && git push origin v1.0.0
-```
+Bump `CFBundleShortVersionString` in `Resources/Info.plist` (for example `1.1.0`) and push to `main`. GitHub Actions builds a universal app, packages the DMG and publishes release `v1.1.0` with the DMG as its download.
 
 ## Credits
 

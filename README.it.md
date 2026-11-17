@@ -76,11 +76,7 @@ Per aggiornare le traduzioni: modifica `Localization/translations/<lingua>.json`
 
 ## Pubblicare una versione
 
-Fai push di un tag di versione. GitHub Actions compila l'app universale, crea il DMG e pubblica la release:
-
-```bash
-git tag v1.0.0 && git push origin v1.0.0
-```
+Aumenta `CFBundleShortVersionString` in `Resources/Info.plist` (per esempio `1.1.0`) e fai push su `main`. GitHub Actions compila l'app universale, crea il DMG e pubblica la release `v1.1.0` con il DMG come download.
 
 ## Crediti
 
